@@ -454,7 +454,7 @@ ClLinearExpression >> initialize [
 
 	self
 		constant: 0.0;
-		terms: LookupTable new.
+		terms: Dictionary new.
 	^self
 ]
 

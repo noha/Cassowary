@@ -445,8 +445,8 @@ ClSimplexSolver >> infeasibleRows: r [
 ClSimplexSolver >> initialize [
 		| zRow |
 	zRow := ClLinearExpression newWithSymbolicWeight.
-	self rows: LookupTable new;
-		columns: LookupTable new;
+	self rows: Dictionary new;
+		columns: Dictionary new;
 		objective: (ClObjectiveVariable newNamed: 'z');
 		infeasibleRows: OrderedCollection new;
 		prevEditConstants: Array new;
@@ -456,8 +456,8 @@ ClSimplexSolver >> initialize [
 		editConstraints: Array new;
 		editPlusErrorVars: Array new;
 		editMinusErrorVars: Array new;
-		markerVars: LookupTable new;
-		errorVars: LookupTable new.
+		markerVars: Dictionary new;
+		errorVars: Dictionary new.
 	self rows at: self objective put: zRow.
 	slackCounter :=0.  artificialCounter := 0.  dummyCounter := 0.
 ]

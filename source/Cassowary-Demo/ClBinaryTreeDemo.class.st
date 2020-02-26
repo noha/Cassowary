@@ -115,7 +115,7 @@ ClBinaryTreeDemo >> initialize [
 	yspace := 20.
 
 	super initialize.
-	nodes := LookupTable new.
+	nodes := Dictionary new.
 	
 	"create the leaves"
 	nleaves := 2 raisedTo: height-1.
