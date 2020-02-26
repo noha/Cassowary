@@ -1,7 +1,7 @@
 Class {
 	#name : #ClSymbolicWeight,
 	#superclass : #Object,
-	#type : #bytes,
+	#type : #variable,
 	#classVars : [
 		'Zero'
 	],
@@ -12,7 +12,7 @@ Class {
 }
 
 { #category : #'instance creation' }
-ClSymbolicWeight class >> initializeAfterLoad [
+ClSymbolicWeight class >> initialize [
 	"ACTION
 		Initialize the class variables to the pre-defined strengths.
 	"

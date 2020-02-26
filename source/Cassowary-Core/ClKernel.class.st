@@ -7,6 +7,11 @@ Class {
 	#category : #'Cassowary-Core'
 }
 
+{ #category : #'class initialization' }
+ClKernel class >> initialize [ 
+	self loaded
+]
+
 { #category : #initialization }
 ClKernel class >> initializeExceptions [
 	"ACTION
@@ -57,8 +62,8 @@ ClKernel class >> loaded [
 	"ACTION
 		Set up the exceptions.
 	"
-	super loaded.
-	self initializeExceptions.
+	"super loaded."
+	"self initializeExceptions."
 	self setEpsilon.
 ]
 

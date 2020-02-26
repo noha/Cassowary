@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : #private }
-ClStrength class >> initializeAfterLoad [
+ClStrength class >> initialize [
 	"ACTION
 		Initialize the class variables to the pre-defined strengths.
 	"
