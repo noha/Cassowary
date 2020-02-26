@@ -2,7 +2,7 @@ Extension { #name : #Float }
 
 { #category : #'*Cassowary-Core' }
 Float >> approxNonNegative [
-	^self > (0.0 - ClSimplexSolver epsilon)
+	^self > (0.0 - ClKernel epsilon)
 ]
 
 { #category : #'*Cassowary-Core' }
@@ -19,7 +19,7 @@ Float >> clApprox: x [
 
 	| epsilon |
 
-	epsilon := ClSimplexSolver epsilon.
+	epsilon := ClKernel epsilon.
 	self = 0.0 ifTrue: [^x abs < epsilon].
 	x = 0.0 ifTrue: [^self abs < epsilon].
 	^(self - x) abs < (self abs * epsilon)

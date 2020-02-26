@@ -20,9 +20,6 @@ Class {
 		'artificialCounter',
 		'dummyCounter'
 	],
-	#pools : [
-		'ClConstants'
-	],
 	#category : #'Cassowary-Core'
 }
 
@@ -30,7 +27,7 @@ Class {
 ClSimplexSolver class >> epsilon [
 	"this is declared as  a method for the benefit of Float, which otherwise doesn't have
 		access to this constant.  (Maybe I'm doing something wrong ...)"
-	^ClEpsilon
+	^ ClKernel epsilon
 ]
 
 { #category : #'instance creation' }
@@ -155,7 +152,7 @@ ClSimplexSolver >> addWithArtificialVariable: expr [
 	"try to optimize av to 0"
 	self optimize: az.
 	"Check that we were able to make the objective value 0.  If not, the original constraint was unsatisfiable."
-	(azRow constant clApproxZero) ifFalse: [ExCLRequiredFailure signal].
+	(azRow constant clApproxZero) ifFalse: [ClRequiredFailure signal].
 	"see if av is a basic variable"
 	self rows at: av ifPresent: [:e |
 		"Find another variable in this row and pivot, so that av becomes parametric.  If there isn't another variable
@@ -256,7 +253,7 @@ ClSimplexSolver >> chooseSubject: expr [
 		constant is nonzero we are trying to add an unsatisfiable required constraint.  (Remember
 		that dummy variables must take on a value of 0.)  Otherwise, if the constant is zero, 
 		multiply by -1 if necessary to make the coefficient for the subject negative."
-	(expr constant clApproxZero) ifFalse: [ExCLRequiredFailure signal].
+	(expr constant clApproxZero) ifFalse: [ClRequiredFailure signal].
 	coeff > 0 ifTrue: [
 		expr terms keysAndValuesDo: [:v :c | expr terms at: v put: 0.0-c]].
 	^subject
@@ -326,7 +323,7 @@ ClSimplexSolver >> dualOptimize [
 						zc := zRow terms at: v ifAbsent: [nil].
 						r := zc isNil ifTrue: [ClSymbolicWeight zero] ifFalse: [zc/c].
 						(ratio isNil or: [r < ratio]) ifTrue: [entryVar := v.  ratio := r]]].
-				ratio isNil ifTrue: [ExCLInternalError signal].
+				ratio isNil ifTrue: [ ClInternalError signal ].
 				self pivot: entryVar exitVar: exitVar]]]
 ]
 
@@ -418,7 +415,7 @@ ClSimplexSolver >> findEditErrorIndex: eVars [
 	eVars do: [:v |
 		index := self editPlusErrorVars indexOf: v.
 		index > 0 ifTrue: [^index]].
-	ExCLInternalError signal  "didn't find a variable"
+	ClInternalError signal  "didn't find a variable"
 ]
 
 { #category : #adding }
@@ -647,7 +644,7 @@ ClSimplexSolver >> optimize: zVar [
 				(minRatio isNil or: [r<minRatio]) ifTrue: [minRatio := r.  exitVar := v]]]].
 		"If minRatio is still nil at this point, it means that the objective function is unbounded, i.e. it can 
 			become arbitrarily negative.  This should never happen in this application."
-		minRatio isNil ifTrue: [ExCLInternalError signal].
+		minRatio isNil ifTrue: [ClInternalError signal].
 		self pivot: entryVar exitVar: exitVar]
 ]
 
@@ -839,7 +836,7 @@ ClSimplexSolver >> resetEditConstants [
 		| delta nn pp |
 	self newEditConstants size = self editPlusErrorVars size ifFalse: [
 		"number of edit constants doesn't match the number of edit error variables"
-		ExCLInternalError signal].
+		ClInternalError signal].
 	1 to: self newEditConstants size do: [:i |
 
 
@@ -992,7 +989,7 @@ ClSimplexSolver >> suggestValue: var newValue: val [
 	"
 	1 to: self editVars size do: [:i | 
 		(editVars at: i) == var ifTrue: [self newEditConstants at: i put: val.  ^self]].
-	ExCLInternalError signal: 'variable not currently being edited'
+	ClInternalError signal: 'variable not currently being edited'
 ]
 
 { #category : #adding }

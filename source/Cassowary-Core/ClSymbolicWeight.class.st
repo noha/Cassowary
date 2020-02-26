@@ -5,9 +5,6 @@ Class {
 	#classVars : [
 		'Zero'
 	],
-	#pools : [
-		'ClConstants'
-	],
 	#category : #'Cassowary-Core'
 }
 
@@ -35,7 +32,7 @@ ClSymbolicWeight class >> zero [
 ClSymbolicWeight >> * n [
 	"Multiply this symbolic weight by n (n should be a number)"
 		| result |
-	n isNumber ifFalse: [ExCLInternalError signal].
+	n isNumber ifFalse: [ClInternalError signal].
 	result := self class new.
 	1 to: self size do: [:i | result at: i put: n*(self at: i)].
 	^result
@@ -45,7 +42,7 @@ ClSymbolicWeight >> * n [
 ClSymbolicWeight >> + n [
 	"Add this symbolic weight to n (which must also be a symbolic weight)"
 		| result |
-	n isSymbolicWeight  ifFalse: [ExCLInternalError signal].
+	n isSymbolicWeight  ifFalse: [ClInternalError signal].
 	result := self class new.
 	1 to: self size do: [:i | result at: i put: (self at: i) + (n at: i)].
 	^result
@@ -55,7 +52,7 @@ ClSymbolicWeight >> + n [
 ClSymbolicWeight >> - n [
 	"Subtract n from this symbolic weight (n must also be a symbolic weight)"
 		| result |
-	n isSymbolicWeight  ifFalse: [ExCLInternalError signal].
+	n isSymbolicWeight  ifFalse: [ClInternalError signal].
 	result := self class new.
 	1 to: self size do: [:i | result at: i put: (self at: i) - (n at: i)].
 	^result
@@ -65,7 +62,7 @@ ClSymbolicWeight >> - n [
 ClSymbolicWeight >> / n [
 	"Divide this symbolic weight by n (n should be a number)"
 		| result |
-	n isNumber ifFalse: [ExCLInternalError signal].
+	n isNumber ifFalse: [ClInternalError signal].
 	result := self class new.
 	1 to: self size do: [:i | result at: i put: (self at: i)/n].
 	^result
@@ -74,7 +71,7 @@ ClSymbolicWeight >> / n [
 { #category : #arithmetic }
 ClSymbolicWeight >> < n [
 		| a b |
-	n isSymbolicWeight  ifFalse: [ExCLInternalError signal].
+	n isSymbolicWeight  ifFalse: [ClInternalError signal].
 	1 to: self size do: [:i | 
 		a := self at: i.  
 		b := n at: i.
@@ -88,7 +85,7 @@ ClSymbolicWeight >> < n [
 { #category : #arithmetic }
 ClSymbolicWeight >> <= n [
 		| a b |
-	n isSymbolicWeight  ifFalse: [ExCLInternalError signal].
+	n isSymbolicWeight  ifFalse: [ClInternalError signal].
 	1 to: self size do: [:i | 
 		a := self at: i.  
 		b := n at: i.
@@ -111,7 +108,7 @@ ClSymbolicWeight >> = n [
 { #category : #arithmetic }
 ClSymbolicWeight >> > n [
 		| a b |
-	n isSymbolicWeight  ifFalse: [ExCLInternalError signal].
+	n isSymbolicWeight  ifFalse: [ClInternalError signal].
 	1 to: self size do: [:i | 
 		a := self at: i.  
 		b := n at: i.
@@ -125,7 +122,7 @@ ClSymbolicWeight >> > n [
 { #category : #arithmetic }
 ClSymbolicWeight >> >= n [
 		| a b |
-	n isSymbolicWeight  ifFalse: [ExCLInternalError signal].
+	n isSymbolicWeight  ifFalse: [ClInternalError signal].
 	1 to: self size do: [:i | 
 		a := self at: i.  
 		b := n at: i.
@@ -141,11 +138,11 @@ ClSymbolicWeight >> approxNonNegative [
 	"return true if this symbolic weight is non-negative.  Allow coefficients that are within epsilon of
 		0 to count as 0"
 		| a nepsilon |
-	nepsilon := 0.0 - ClEpsilon.
+	nepsilon := 0.0 - ClKernel epsilon.
 	1 to: self size do: [:i | 
 		a := self at: i.  
 		a<nepsilon ifTrue: [^false].
-		a>ClEpsilon ifTrue: [^true]].
+		a> ClKernel epsilon ifTrue: [^true]].
 	^true
 ]
 
@@ -154,7 +151,7 @@ ClSymbolicWeight >> clApprox: s [
 	"Return true if this symbolic weight is approximately equal to s. 
 		The argument s must be another symbolic weight -- we can't
 		compare symbolic weights with ordinary numbers."
-	s isSymbolicWeight ifFalse: [ExCLInternalError signal].
+	s isSymbolicWeight ifFalse: [ClInternalError signal].
 	1 to: self size do: [:i | 
 		((self at: i) clApprox: (s at: i)) ifFalse: [^false]].
 	^true

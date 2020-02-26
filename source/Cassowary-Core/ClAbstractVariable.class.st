@@ -4,9 +4,6 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#pools : [
-		'ClConstants'
-	],
 	#category : #'Cassowary-Core'
 }
 

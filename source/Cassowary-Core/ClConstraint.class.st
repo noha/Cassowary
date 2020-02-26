@@ -5,9 +5,6 @@ Class {
 		'strength',
 		'weight'
 	],
-	#pools : [
-		'ClConstants'
-	],
 	#category : #'Cassowary-Core'
 }
 

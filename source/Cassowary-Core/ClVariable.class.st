@@ -4,9 +4,6 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#classVars : [
-		'ExCLNonlinearExpression'
-	],
 	#category : #'Cassowary-Core'
 }
 
@@ -252,7 +249,7 @@ ClVariable >> divFrom: aNumber [
 	RETURNS
 		<ClLinearExpression>
 	"
-	ExCLNonlinearExpression signal
+	ClNonLinearExpression signal
 ]
 
 { #category : #arithmetic }

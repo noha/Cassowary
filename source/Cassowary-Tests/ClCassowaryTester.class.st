@@ -206,7 +206,7 @@ c inconsistent1.
 	solver := ClSimplexSolver new.
 	solver addConstraint: (x cnEqual: 10.0).
 	signalled := false.
-	[solver addConstraint: (x cnEqual: 5.0)] when: ExCLRequiredFailure do: [:signal | signalled := true. signal exitWith: false].
+	[solver addConstraint: (x cnEqual: 5.0)] when: ClRequiredFailure do: [:signal | signalled := true. signal exitWith: false].
 
 	Transcript cr; 
 		show: 'ClCassowaryTester inconsistent1 result='; 
@@ -238,7 +238,7 @@ c inconsistent2.
 	solver := ClSimplexSolver new.
 	solver addConstraint: (x cnGEQ: 10.0).
 	signalled := false.
-	[solver addConstraint: (x cnLEQ: 5.0)] when: ExCLRequiredFailure do: [:signal | signalled := true. signal exitWith: false].
+	[solver addConstraint: (x cnLEQ: 5.0)] when: ClRequiredFailure do: [:signal | signalled := true. signal exitWith: false].
 
 	Transcript cr; 
 		show: 'ClCassowaryTester inconsistent2 result='; 

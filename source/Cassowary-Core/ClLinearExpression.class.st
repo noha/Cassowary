@@ -5,13 +5,6 @@ Class {
 		'constant',
 		'terms'
 	],
-	#classVars : [
-		'ExCLInternalError',
-		'ExCLNonlinearExpression'
-	],
-	#pools : [
-		'ClConstants'
-	],
 	#category : #'Cassowary-Core'
 }
 
@@ -45,7 +38,7 @@ ClLinearExpression >> * x [
 	"otherwise multiply by x"
 	x isNumber ifTrue: [n := x asFloat]
 		ifFalse: [expr := x asLinearExpression.
-			x isConstant ifFalse: [ExCLNonlinearExpression signal  "result would be non-linear"].
+			x isConstant ifFalse: [ ClNonLinearExpression signal  "result would be non-linear"].
 			n := x constant].
 	result := ClLinearExpression new.
 	result constant: n*self constant.
@@ -99,7 +92,7 @@ ClLinearExpression >> / x [
 	"
 		| expr |
 	expr := x asLinearExpression.
-	expr isConstant ifFalse: [ExCLNonlinearExpression signal  "result would be non-linear"].
+	expr isConstant ifFalse: [ ClNonLinearExpression signal  "result would be non-linear"].
 	^self * (1.0/expr constant)
 ]
 
@@ -201,7 +194,7 @@ ClLinearExpression >> anyVariable [
 
 	self terms keysDo: [:v | ^v].
 	"signal an error if this expression is constant"
-	ExCLInternalError signal
+	ClInternalError signal
 ]
 
 { #category : #arithmetic }
@@ -431,7 +424,7 @@ ClLinearExpression >> divFrom: aNumber [
 	"
 	self isConstant ifTrue: [^aNumber / self constant].
 	"result would be non-linear"
-	ExCLNonlinearExpression signal
+	ClNonLinearExpression signal
 ]
 
 { #category : #arithmetic }
