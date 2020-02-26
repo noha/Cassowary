@@ -6,7 +6,7 @@ Class {
 		'p2',
 		'm1'
 	],
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #'as yet unclassified' }

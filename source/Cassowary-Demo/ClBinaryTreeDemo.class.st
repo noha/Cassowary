@@ -6,7 +6,7 @@ Class {
 		'lines',
 		'height'
 	],
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #'accessing structure variables' }

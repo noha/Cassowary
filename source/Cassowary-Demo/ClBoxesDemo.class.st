@@ -8,7 +8,7 @@ Class {
 		'p4',
 		'p5'
 	],
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #enumerating }

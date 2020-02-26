@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'ClConstants'
 	],
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Tests'
 }
 
 { #category : #adding }

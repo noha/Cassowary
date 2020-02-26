@@ -1,5 +1,5 @@
 Class {
 	#name : #ClTests,
 	#superclass : #Object,
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Tests'
 }

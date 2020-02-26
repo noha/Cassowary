@@ -1,5 +1,5 @@
 Class {
-	#name : #ClQuadDemo,
+	#name : #ClCrossedQuadDemo,
 	#superclass : #ClDemoWindow,
 	#instVars : [
 		'p1',
@@ -9,18 +9,19 @@ Class {
 		'm1',
 		'm2',
 		'm3',
-		'm4'
+		'm4',
+		'center'
 	],
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #adding }
-ClQuadDemo >> addAdditionalConstraints [
+ClCrossedQuadDemo >> addAdditionalConstraints [
 	"no additional constraints for this version"
 ]
 
-{ #category : #'as yet unclassified' }
-ClQuadDemo >> constraintPointsDo: aBlock [
+{ #category : #adding }
+ClCrossedQuadDemo >> constraintPointsDo: aBlock [
 
 	aBlock value: p1.
 	aBlock value: p2.
@@ -30,11 +31,13 @@ ClQuadDemo >> constraintPointsDo: aBlock [
 	aBlock value: m1.
 	aBlock value: m2.
 	aBlock value: m3.
-	aBlock value: m4
+	aBlock value: m4.
+
+	aBlock value: center
 ]
 
-{ #category : #'as yet unclassified' }
-ClQuadDemo >> drawArea [
+{ #category : #adding }
+ClCrossedQuadDemo >> drawArea [
 
 	self setForegroundColor: 0.
 
@@ -88,12 +91,25 @@ ClQuadDemo >> drawArea [
 		x1: m4 x value rounded
 		y1: m4 y value rounded
 		x2: m1 x value rounded
-		y2: m1 y value rounded
+		y2: m1 y value rounded.
 
+	"draw the cross lines"
+	buffer
+		drawLine: gc
+		x1: m1 x value rounded
+		y1: m1 y value rounded
+		x2: m3 x value rounded
+		y2: m3 y value rounded.
+	buffer
+		drawLine: gc
+		x1: m2 x value rounded
+		y1: m2 y value rounded
+		x2: m4 x value rounded
+		y2: m4 y value rounded
 ]
 
-{ #category : #'as yet unclassified' }
-ClQuadDemo >> initialize [
+{ #category : #adding }
+ClCrossedQuadDemo >> initialize [
 
 	super initialize.
 	p1 := (ClVariable newWith: 110.0) @ (ClVariable newWith: 10.0).
@@ -105,6 +121,8 @@ ClQuadDemo >> initialize [
 	m2 := (ClVariable newWith: 160.0) @ (ClVariable newWith: 160.0).
 	m3 := (ClVariable newWith: 60.0) @ (ClVariable newWith: 160.0).
 	m4 := (ClVariable newWith: 60.0) @ (ClVariable newWith: 60.0).
+
+	center := (ClVariable newWith: 110.0) @ (ClVariable newWith: 110.0).
 
 	p1 x name: 'p1x'.
 	p1 y name: 'p1y'.
@@ -124,6 +142,9 @@ ClQuadDemo >> initialize [
 	m4 x name: 'm4x'.
 	m4 y name: 'm4y'.
 
+	center x name: 'cx'.
+	center y name: 'cy'.
+
 	"add stays on the corner points"
 	cs addPointStays: (Array with: p1 with: p2 with: p3 with: p4).
 
@@ -137,11 +158,17 @@ ClQuadDemo >> initialize [
 	cs addConstraint: (p3 y + p4 y cnEqual: 2.0 * m3 y).
 	cs addConstraint: (p4 y + p1 y cnEqual: 2.0 * m4 y).
 
+	"set up the centerpoint constraints"
+	cs addConstraint: (m1 x + m3 x cnEqual: 2.0 * center x).
+	cs addConstraint: (m1 y + m3 y cnEqual: 2.0 * center y).
+	cs addConstraint: (m2 x + m4 x cnEqual: 2.0 * center x).
+	cs addConstraint: (m2 y + m4 y cnEqual: 2.0 * center y).
+
 	self addAdditionalConstraints.
 ]
 
-{ #category : #'as yet unclassified' }
-ClQuadDemo >> title [
+{ #category : #accessing }
+ClCrossedQuadDemo >> title [
 
-	^'Quadrilateral Demo'
+	^'Crossed Quadrilateral Demo'
 ]

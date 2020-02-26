@@ -21,7 +21,7 @@ Class {
 		'ClConstants',
 		'CwConstants'
 	],
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #'as yet unclassified' }

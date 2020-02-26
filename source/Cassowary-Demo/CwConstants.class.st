@@ -1,5 +1,5 @@
 Class {
 	#name : #CwConstants,
 	#superclass : #SharedPool,
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }

@@ -1,7 +1,7 @@
 Class {
 	#name : #ClBoundedQuadDemo,
 	#superclass : #ClQuadDemo,
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #adding }

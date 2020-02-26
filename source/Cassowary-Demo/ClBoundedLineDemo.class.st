@@ -5,7 +5,7 @@ Class {
 		'p1',
 		'p2'
 	],
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #enumerating }

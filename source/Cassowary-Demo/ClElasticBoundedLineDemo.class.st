@@ -1,7 +1,7 @@
 Class {
 	#name : #ClElasticBoundedLineDemo,
 	#superclass : #ClBoundedLineDemo,
-	#category : #'Cassowary-Core'
+	#category : #'Cassowary-Demo'
 }
 
 { #category : #enumerating }
