@@ -81,6 +81,11 @@ ClVariable >> @ obj [
 	^Point x: self y: obj
 ]
 
+{ #category : #'as yet unclassified' }
+ClVariable >> adaptToNumber: aNumber andSend: aSymbol [
+	^ aNumber asLinearExpression perform: aSymbol with: self
+]
+
 { #category : #arithmetic }
 ClVariable >> asLinearExpression [
 	"ACTION

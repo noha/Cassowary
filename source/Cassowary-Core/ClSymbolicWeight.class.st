@@ -20,12 +20,12 @@ ClSymbolicWeight class >> initialize [
 
 { #category : #'instance creation' }
 ClSymbolicWeight class >> new [
-	^self basicNew: ClStrength nLevels
+	^ self basicNew: ClStrength nLevels
 ]
 
 { #category : #'instance creation' }
 ClSymbolicWeight class >> zero [
-	^Zero
+	^ Zero
 ]
 
 { #category : #arithmetic }
@@ -131,6 +131,15 @@ ClSymbolicWeight >> >= n [
 		"they're equal ... keep going"].
 	"all elements were equal"
 	^true
+]
+
+{ #category : #'as yet unclassified' }
+ClSymbolicWeight >> adaptToNumber: aNumber andSend: aSymbol [
+	(aSymbol = #*) ifTrue: [  
+		^ self perform: aSymbol with: aNumber ].
+	(aSymbol = #/) ifTrue: [ 
+		^  self perform: aSymbol with: 1 / aNumber ].
+	Error signal: 'adaptation unknown'
 ]
 
 { #category : #arithmetic }

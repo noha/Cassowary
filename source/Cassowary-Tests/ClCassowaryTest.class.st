@@ -38,14 +38,7 @@ ClCassowaryTest >> testAddDelete1 [
 { #category : #adding }
 ClCassowaryTest >> testAddDelete2 [
 
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c addDelete2.
-"
-
-		| x y solver result c10 c10again c20 cxy |
+	| x y solver result c10 c20 cxy |
 
 	x := ClVariable new name: 'x'.
 	y := ClVariable new name: 'y'.
@@ -59,7 +52,7 @@ c addDelete2.
 	result := (x value clApprox: 10.0) & (y value clApprox: 120.0).
 	solver removeConstraint: c10.
 	result := result & (x value clApprox: 20.0) & (y value clApprox: 120.0).
-	cxy := 2*x cnEqual: y.
+	cxy := 2 * x cnEqual: y.
 	solver addConstraint: cxy.
 	result := result & (x value clApprox: 20.0) & (y value clApprox: 40.0).
 	solver removeConstraint: c20.
