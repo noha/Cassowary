@@ -1,9 +1,6 @@
 Class {
-	#name : #ClCassowaryTester,
-	#superclass : #Object,
-	#instVars : [
-		'haltFirst'
-	],
+	#name : #ClCassowaryTest,
+	#superclass : #TestCase,
 	#pools : [
 		'ClConstants'
 	],
@@ -11,18 +8,9 @@ Class {
 }
 
 { #category : #adding }
-ClCassowaryTester >> addDelete1 [
+ClCassowaryTest >> testAddDelete1 [
 
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c addDelete1.
-"
-
-		| x solver result c10 c10again c20 |
-
-	haltFirst ifTrue: [self halt].
+	| x solver result c10 c10again c20 |
 
 	x := ClVariable new name: 'x'.
 
@@ -44,14 +32,11 @@ c addDelete1.
 	solver removeConstraint: c10again.
 	result := result & (x value clApprox: 100.0).
 
-	Transcript cr; 
-		show: 'ClCassowaryTester addDelete1 result='; 
-		show: (result ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: result
 ]
 
 { #category : #adding }
-ClCassowaryTester >> addDelete2 [
+ClCassowaryTest >> testAddDelete2 [
 
 "
 	| c |
@@ -61,8 +46,6 @@ c addDelete2.
 "
 
 		| x y solver result c10 c10again c20 cxy |
-
-	haltFirst ifTrue: [self halt].
 
 	x := ClVariable new name: 'x'.
 	y := ClVariable new name: 'y'.
@@ -84,25 +67,12 @@ c addDelete2.
 	solver removeConstraint: cxy.
 	result := result & (x value clApprox: 100.0) & (y value clApprox: 120.0).
 
-	Transcript cr; 
-		show: 'ClCassowaryTester addDelete2 result='; 
-		show: (result ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: result
 ]
 
 { #category : #adding }
-ClCassowaryTester >> addDelete3 [
-
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c addDelete3.
-"
-
-		| x solver result c1 c2 |
-
-	haltFirst ifTrue: [self halt].
+ClCassowaryTest >> testAddDelete3 [
+	| x solver result c1 c2 |
 
 	x := ClVariable new name: 'x'.
 
@@ -114,25 +84,13 @@ c addDelete3.
 	solver removeConstraint: c1.
 	result := result & (x value clApprox: 200.0).
 
-	Transcript cr; 
-		show: 'ClCassowaryTester addDelete2 result='; 
-		show: (result ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: result
 ]
 
 { #category : #adding }
-ClCassowaryTester >> edit1 [
+ClCassowaryTest >> testEdit1 [
 
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c edit1.
-"
-
-		| x y solver result  |
-
-	haltFirst ifTrue: [self halt].
+	| x y solver result  |
 
 	x := ClVariable newWith: 20.0 name: 'x'.
 	y := ClVariable newWith: 30.0 name: 'y'.
@@ -176,89 +134,51 @@ c edit1.
 ]
 
 { #category : #adding }
-ClCassowaryTester >> haltFirst: h [
-	"haltFirst is a boolean flag ... if it is true, halt before running each test, so that the user
-		can step through the test if desired"
-	haltFirst := h.
-]
-
-{ #category : #adding }
-ClCassowaryTester >> inconsistent1 [
-
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c inconsistent1.
-"
+ClCassowaryTest >> testInconsistent1 [
 
 	"inconsistent constraints:
 		req'd	x=10
 		req'd	x=5
 	"
 
-		| x solver signalled |
-
-	haltFirst ifTrue: [self halt].
+	| x solver signalled |
 
 	x := ClVariable new name: 'x'.
 
 	solver := ClSimplexSolver new.
 	solver addConstraint: (x cnEqual: 10.0).
 	signalled := false.
-	[solver addConstraint: (x cnEqual: 5.0)] when: ClRequiredFailure do: [:signal | signalled := true. signal exitWith: false].
+	[solver addConstraint: (x cnEqual: 5.0)] on: ClRequiredFailure do: [:signal | signalled := true. signal return: false].
 
-	Transcript cr; 
-		show: 'ClCassowaryTester inconsistent1 result='; 
-		show: (signalled ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: signalled
+
 ]
 
 { #category : #adding }
-ClCassowaryTester >> inconsistent2 [
-
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c inconsistent2.
-"
+ClCassowaryTest >> testInconsistent2 [
 
 	"inconsistent constraints:
 		req'd	x>=10
 		req'd	x<=5
 	"
 
-		| x solver signalled |
-
-	haltFirst ifTrue: [self halt].
+	| x solver signalled |
 
 	x := ClVariable new name: 'x'.
 
 	solver := ClSimplexSolver new.
 	solver addConstraint: (x cnGEQ: 10.0).
 	signalled := false.
-	[solver addConstraint: (x cnLEQ: 5.0)] when: ClRequiredFailure do: [:signal | signalled := true. signal exitWith: false].
+	[solver addConstraint: (x cnLEQ: 5.0)] on: ClRequiredFailure do: [:signal | signalled := true. signal return: false].
 
-	Transcript cr; 
-		show: 'ClCassowaryTester inconsistent2 result='; 
-		show: (signalled ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: signalled
+
 ]
 
 { #category : #adding }
-ClCassowaryTester >> stay1 [
+ClCassowaryTest >> testStay1 [
 
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c stay1.
-"
-
-		| x solver result stay |
-
-	haltFirst ifTrue: [self halt].
+	| x solver result stay |
 
 	x := ClVariable newWith: 20.0 name: 'x'.
 
@@ -269,22 +189,11 @@ c stay1.
 	result := (x value clApprox: 20.0).
 	solver removeConstraint: stay.
 
-	Transcript cr; 
-		show: 'ClCassowaryTester stay1 result='; 
-		show: (result ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: result
 ]
 
 { #category : #adding }
-ClCassowaryTester >> twoSolutions [
-
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c twoSolutions.
-"
-
+ClCassowaryTest >> testTwoSolutions [
 	"
 		req'd   x<=y
 		req'd   y=x+3
@@ -293,9 +202,7 @@ c twoSolutions.
 
 		The solution is x=7, y=10  or x=10, y=13 "
 
-		| x y solver result |
-
-	haltFirst ifTrue: [self halt].
+	| x y solver result |
 
 	x := ClVariable new name: 'x'.
 	y := ClVariable new name: 'y'.
@@ -310,25 +217,14 @@ c twoSolutions.
 		(x value clApprox: 10.0) & (y value clApprox: 13.0)
 			or: [	(x value clApprox: 7.0) & (y value clApprox: 10.0) ].
 
-	Transcript cr; 
-		show: 'ClCassowaryTester twoSolutions result='; 
-		show: (result ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: result
+
 ]
 
 { #category : #adding }
-ClCassowaryTester >> weighted1 [
+ClCassowaryTest >> testWeighted1 [
 
-"
-	| c |
-c := ClCassowaryTester new.
-c haltFirst: false.
-c weighted1.
-"
-
-		| x solver result c15 c20 |
-
-	haltFirst ifTrue: [self halt].
+	| x solver result c15 c20 |
 
 	x := ClVariable new name: 'x'.
 
@@ -342,8 +238,6 @@ c weighted1.
 	solver removeConstraint: c20.
 	result := result & (x value clApprox: 15.0).
 
-	Transcript cr; 
-		show: 'ClCassowaryTester weighted1 result='; 
-		show: (result ifTrue: ['passed'] ifFalse: ['failed']); 
-		cr.
+	self assert: result
+
 ]
